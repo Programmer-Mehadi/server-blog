@@ -43,7 +43,7 @@ model Blog {
 
 model Comment {
   id          Int      @id @default(autoincrement())
-  commnetId   String
+  commentId   String   @unique
   giverId     String
   user        User     @relation(fields: [giverId], references: [userId])
   blogId      String

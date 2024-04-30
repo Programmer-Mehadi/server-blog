@@ -12,6 +12,9 @@ const createSchema = z.object({
 })
 const updateSchema = z.object({
   body: z.object({
+    commentId: z.string({
+      required_error: "Comment Id is required",
+    }),
     blogId: z.string({
       required_error: "Blog Id is required",
     }),
@@ -21,9 +24,9 @@ const updateSchema = z.object({
   }),
 })
 
-const BlogValidation = {
+const CommentValidation = {
   createSchema,
   updateSchema,
 }
 
-export default BlogValidation
+export default CommentValidation

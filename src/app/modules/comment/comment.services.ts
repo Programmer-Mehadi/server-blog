@@ -7,6 +7,33 @@ const createToDB = async (commentData: any) => {
   return result
 }
 
-const CommentServices = { createToDB }
+const updateToDB = async (commentData: any) => {
+  const result = await prisma.comment.update({
+    where: { commentId: commentData.commentId, giverId: commentData.giverId },
+    data: commentData,
+  })
+  return result
+}
+
+const deleteToDB = async (commentId: string, giverId: string) => {
+  const result = await prisma.comment.delete({
+    where: { commentId, giverId },
+  })
+  return result
+}
+
+const getAllCommentByBlogFromDB = async (blogId: string) => {
+  const result = await prisma.comment.findMany({
+    where: { blogId },
+  })
+  return result
+}
+
+const CommentServices = {
+  createToDB,
+  updateToDB,
+  getAllCommentByBlogFromDB,
+  deleteToDB,
+}
 
 export default CommentServices
