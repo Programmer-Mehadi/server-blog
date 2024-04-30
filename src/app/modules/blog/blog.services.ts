@@ -28,8 +28,16 @@ const updateToDB = async (blogData: any) => {
   return updateBlog
 }
 
-const getAllBlogFromDB = async (pagination: IPagination) => {
+const getAllBlogFromDB = async (pagination: IPagination, search?: string) => {
   const blog = await prisma.blog.findMany({
+    where: {
+      title: {
+        contains: search,
+      },
+      content: {
+        contains: search,
+      },
+    },
     select: {
       blogId: true,
       title: true,

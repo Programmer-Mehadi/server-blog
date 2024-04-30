@@ -96,10 +96,16 @@ const update = catchAsync(async (req: any, res: any, next: any) => {
 })
 
 const getAllBlog = catchAsync(async (req: any, res: any, next: any) => {
-  const pagination = req.query
-  pagination.page = Number(pagination.page) || 1
-  pagination.limit = Number(pagination.limit) || 15
-  const blog = await BlogServices.getAllBlogFromDB(pagination)
+  // set pagination
+  let { page, limit } = req.query
+  page = Number(page) || 1
+  limit = Number(limit) || 15
+  const pagination = { page, limit }
+  // set search
+  const { search = "" } = req.query
+  // get data
+  const blog = await BlogServices.getAllBlogFromDB(pagination, search)
+  // if data inserted
   if (blog) {
     return sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -109,6 +115,7 @@ const getAllBlog = catchAsync(async (req: any, res: any, next: any) => {
       meta: null,
     })
   }
+  // if data not inserted
   return sendResponse(res, {
     statusCode: httpStatus.BAD_REQUEST,
     success: false,
