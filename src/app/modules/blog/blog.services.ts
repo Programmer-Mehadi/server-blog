@@ -29,6 +29,7 @@ const updateToDB = async (blogData: any) => {
 }
 
 const getAllBlogFromDB = async (pagination: IPagination, search?: string) => {
+  // get data by pagination and search value
   const blog = await prisma.blog.findMany({
     where: {
       title: {
