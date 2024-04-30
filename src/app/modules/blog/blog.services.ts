@@ -3,8 +3,7 @@ import prisma from "../../../shared/prisma"
 import { IPagination } from "../../../interfaces/pagination"
 
 const createToDB = async (blogData: any) => {
-  const blogId = uuid()
-  blogData.blogId = blogId
+  blogData.blogId = uuid()
   const insertBlog = await prisma.blog.create({ data: blogData })
   return insertBlog
 }

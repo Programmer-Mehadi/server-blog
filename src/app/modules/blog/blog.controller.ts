@@ -98,7 +98,7 @@ const update = catchAsync(async (req: any, res: any, next: any) => {
 const getAllBlog = catchAsync(async (req: any, res: any, next: any) => {
   const pagination = req.query
   pagination.page = Number(pagination.page) || 1
-  pagination.limit = Number(pagination.limit) || 10
+  pagination.limit = Number(pagination.limit) || 15
   const blog = await BlogServices.getAllBlogFromDB(pagination)
   if (blog) {
     return sendResponse(res, {

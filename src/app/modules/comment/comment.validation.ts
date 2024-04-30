@@ -12,9 +12,6 @@ const createSchema = z.object({
 })
 const updateSchema = z.object({
   body: z.object({
-    commentId: z.string({
-      required_error: "Comment Id is required",
-    }),
     blogId: z.string({
       required_error: "Blog Id is required",
     }),

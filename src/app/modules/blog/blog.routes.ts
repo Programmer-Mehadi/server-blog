@@ -15,17 +15,17 @@ router.post(
 
 // delete a blog
 router.delete(
-  "/delete/:blogId",
+  "/:blogId",
   authMiddleware("admin", "user"),
   BlogController.deleteBlog
 )
 
 // get single blog
-router.get("/single/:blogId", BlogController.getSingle)
+router.get("/:blogId", BlogController.getSingle)
 
 // update a blog
 router.patch(
-  "/update/:blogId",
+  "/:blogId",
   authMiddleware("admin", "user"),
   validateRequest(BlogValidation.updateSchema),
   BlogController.update

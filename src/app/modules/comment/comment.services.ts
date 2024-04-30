@@ -25,6 +25,19 @@ const deleteToDB = async (commentId: string, giverId: string) => {
 const getAllCommentByBlogFromDB = async (blogId: string) => {
   const result = await prisma.comment.findMany({
     where: { blogId },
+    select: {
+      commentId: true,
+      commentText: true,
+      updatedAt: true,
+      createdAt: true,
+      giverId: true,
+      user: {
+        select: {
+          name: true,
+          profileImg: true,
+        },
+      },
+    },
   })
   return result
 }

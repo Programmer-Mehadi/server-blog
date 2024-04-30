@@ -27,6 +27,7 @@ const create = catchAsync(async (req: any, res: any, next: any) => {
 
 const update = catchAsync(async (req: any, res: any, next: any) => {
   const commentData = req.body
+  commentData.commentId = req.params.commentId
   commentData.giverId = req.user.userId
   const comment = await CommentServices.updateToDB(commentData)
   if (comment) {

@@ -6,30 +6,26 @@ import CommentController from "./comment.controller"
 const router = express.Router()
 
 router.post(
-  "/create",
+  "/",
   authMiddleware("admin", "user"),
   validateRequest(CommentValidation.createSchema),
   CommentController.create
 )
 
 router.patch(
-  "/update",
+  "/:commentId",
   authMiddleware("admin", "user"),
   validateRequest(CommentValidation.updateSchema),
   CommentController.update
 )
 
 router.delete(
-  "/delete/:commentId",
+  "/:commentId",
   authMiddleware("admin", "user"),
   CommentController.deleteComment
 )
 
-router.get(
-  "/all/:blogId",
-  authMiddleware("admin", "user"),
-  CommentController.getAllCommentByBlog
-)
+router.get("/all/:blogId", CommentController.getAllCommentByBlog)
 
 const CommentRoutes = router
 
