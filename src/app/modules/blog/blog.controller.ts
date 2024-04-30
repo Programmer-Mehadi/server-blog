@@ -51,6 +51,27 @@ const deleteBlog = catchAsync(async (req: any, res: any, next: any) => {
   })
 })
 
-const BlogController = { create, deleteBlog }
+const getSingle = catchAsync(async (req: any, res: any, next: any) => {
+  const { blogId } = req.params
+  const blog = await BlogServices.getSingleFromDB(blogId)
+  if (blog) {
+    return sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Blog get successfully",
+      data: blog,
+      meta: null,
+    })
+  }
+  return sendResponse(res, {
+    statusCode: httpStatus.BAD_REQUEST,
+    success: false,
+    message: "Blog cannot get, please try again",
+    data: null,
+    meta: null,
+  })
+})
+
+const BlogController = { create, deleteBlog, getSingle }
 
 export default BlogController

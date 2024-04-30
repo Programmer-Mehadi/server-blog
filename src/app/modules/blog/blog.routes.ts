@@ -18,6 +18,8 @@ router.delete(
   BlogController.deleteBlog
 )
 
+router.get("/all", BlogController.getSingle)
+
 const BlogRoutes = router
 
 export default BlogRoutes

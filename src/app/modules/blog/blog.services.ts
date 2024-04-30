@@ -15,6 +15,11 @@ const deleteToDB = async (blogId: string, userId: string) => {
   return deleteBlog
 }
 
-const BlogServices = { createToDB, deleteToDB }
+const getSingleFromDB = async (blogId: string) => {
+  const blog = await prisma.blog.findUnique({ where: { blogId } })
+  return blog
+}
+
+const BlogServices = { createToDB, deleteToDB, getSingleFromDB }
 
 export default BlogServices
