@@ -8,6 +8,13 @@ const createToDB = async (blogData: any) => {
   return insertBlog
 }
 
-const BlogServices = { createToDB }
+const deleteToDB = async (blogId: string, userId: string) => {
+  const deleteBlog = await prisma.blog.deleteMany({
+    where: { blogId, authorId: userId },
+  })
+  return deleteBlog
+}
+
+const BlogServices = { createToDB, deleteToDB }
 
 export default BlogServices

@@ -29,6 +29,28 @@ const create = catchAsync(async (req: any, res: any, next: any) => {
   })
 })
 
-const BlogController = { create }
+const deleteBlog = catchAsync(async (req: any, res: any, next: any) => {
+  const { blogId } = req.params
+  const { userId } = req.user
+  const blog = await BlogServices.deleteToDB(blogId, userId)
+  if (blog) {
+    return sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Blog deleted successfully",
+      data: blog,
+      meta: null,
+    })
+  }
+  return sendResponse(res, {
+    statusCode: httpStatus.BAD_REQUEST,
+    success: false,
+    message: "Blog cannot delete, please try again",
+    data: null,
+    meta: null,
+  })
+})
+
+const BlogController = { create, deleteBlog }
 
 export default BlogController

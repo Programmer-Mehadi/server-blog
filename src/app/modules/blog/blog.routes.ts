@@ -12,6 +12,12 @@ router.post(
   BlogController.create
 )
 
+router.delete(
+  "/delete/:blogId",
+  authMiddleware("admin", "user"),
+  BlogController.deleteBlog
+)
+
 const BlogRoutes = router
 
 export default BlogRoutes
