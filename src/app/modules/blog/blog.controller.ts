@@ -75,6 +75,7 @@ const getSingle = catchAsync(async (req: any, res: any, next: any) => {
 const update = catchAsync(async (req: any, res: any, next: any) => {
   const blogData = req.body
   blogData.authorId = req.user.userId
+  blogData.blogId = req.params.blogId
   const blog = await BlogServices.updateToDB(blogData)
   if (blog) {
     return sendResponse(res, {
@@ -94,6 +95,28 @@ const update = catchAsync(async (req: any, res: any, next: any) => {
   })
 })
 
-const BlogController = { create, deleteBlog, getSingle, update }
+const getAllBlog = catchAsync(async (req: any, res: any, next: any) => {
+  const pagination = req.query
+  pagination.page = Number(pagination.page) || 1
+  pagination.limit = Number(pagination.limit) || 10
+  const blog = await BlogServices.getAllBlogFromDB(pagination)
+  if (blog) {
+    return sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Blog get successfully",
+      data: blog,
+      meta: null,
+    })
+  }
+  return sendResponse(res, {
+    statusCode: httpStatus.BAD_REQUEST,
+    success: false,
+    message: "Blog cannot get, please try again",
+    data: null,
+    meta: null,
+  })
+})
+const BlogController = { create, deleteBlog, getSingle, update, getAllBlog }
 
 export default BlogController

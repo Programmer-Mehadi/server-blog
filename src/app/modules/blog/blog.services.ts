@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid"
 import prisma from "../../../shared/prisma"
+import { IPagination } from "../../../interfaces/pagination"
 
 const createToDB = async (blogData: any) => {
   const blogId = uuid()
@@ -28,6 +29,33 @@ const updateToDB = async (blogData: any) => {
   return updateBlog
 }
 
-const BlogServices = { createToDB, deleteToDB, getSingleFromDB, updateToDB }
+const getAllBlogFromDB = async (pagination: IPagination) => {
+  const blog = await prisma.blog.findMany({
+    select: {
+      blogId: true,
+      title: true,
+      imageUrl: true,
+      content: true,
+      authorId: true,
+      user: {
+        select: {
+          name: true,
+          profileImg: true,
+        },
+      },
+    },
+    skip: (pagination.page - 1) * pagination.limit,
+    take: pagination.limit,
+  })
+  return blog
+}
+
+const BlogServices = {
+  createToDB,
+  deleteToDB,
+  getSingleFromDB,
+  updateToDB,
+  getAllBlogFromDB,
+}
 
 export default BlogServices

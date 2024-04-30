@@ -5,6 +5,7 @@ import BlogController from "./blog.controller"
 import authMiddleware from "../../middlewares/authMiddleware"
 const router = express.Router()
 
+// create a blog
 router.post(
   "/create",
   authMiddleware("admin", "user"),
@@ -12,13 +13,26 @@ router.post(
   BlogController.create
 )
 
+// delete a blog
 router.delete(
   "/delete/:blogId",
   authMiddleware("admin", "user"),
   BlogController.deleteBlog
 )
 
-router.get("/all", BlogController.getSingle)
+// get single blog
+router.get("/single/:blogId", BlogController.getSingle)
+
+// update a blog
+router.patch(
+  "/update/:blogId",
+  authMiddleware("admin", "user"),
+  validateRequest(BlogValidation.updateSchema),
+  BlogController.update
+)
+
+// get all blog
+router.get("/all", BlogController.getAllBlog)
 
 const BlogRoutes = router
 
