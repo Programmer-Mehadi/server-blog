@@ -14,13 +14,41 @@ enum Role {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  userId     String
-  email      String   @unique
+  id         Int       @id @default(autoincrement())
+  userId     String    @unique
+  email      String    @unique
   name       String
   password   String
   profileImg String
-  role       Role     @default(USER)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  role       Role      @default(USER)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Blog       Blog[]
+  Comment    Comment[]
+}
+
+model Blog {
+  id        Int       @id @default(autoincrement())
+  blogId    String    @unique
+  user      User      @relation(fields: [authorId], references: [userId])
+  authorId  String
+  title     String
+  videoUrl  String
+  imageUrl  String
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Comment   Comment[]
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  commnetId   String
+  giverId     String
+  user        User     @relation(fields: [giverId], references: [userId])
+  blogId      String
+  blog        Blog     @relation(fields: [blogId], references: [blogId])
+  commentText String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
