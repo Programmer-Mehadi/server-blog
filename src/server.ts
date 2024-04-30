@@ -4,8 +4,6 @@ import config from "./config"
 
 // Create an HTTP server
 
-// Handle socket connections
-
 async function bootstrap() {
   const serverPre = createServer(app)
 
