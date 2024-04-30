@@ -20,6 +20,14 @@ const getSingleFromDB = async (blogId: string) => {
   return blog
 }
 
-const BlogServices = { createToDB, deleteToDB, getSingleFromDB }
+const updateToDB = async (blogData: any) => {
+  const updateBlog = await prisma.blog.update({
+    where: { blogId: blogData.blogId, authorId: blogData.authorId },
+    data: blogData,
+  })
+  return updateBlog
+}
+
+const BlogServices = { createToDB, deleteToDB, getSingleFromDB, updateToDB }
 
 export default BlogServices

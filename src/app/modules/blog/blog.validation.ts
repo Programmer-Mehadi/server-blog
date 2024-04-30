@@ -18,6 +18,9 @@ const createSchema = z.object({
 })
 const updateSchema = z.object({
   body: z.object({
+    blogId: z.string({
+      required_error: "Blog Id is required",
+    }),
     title: z.string({
       required_error: "Title is required",
     }),

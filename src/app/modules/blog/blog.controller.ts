@@ -72,6 +72,28 @@ const getSingle = catchAsync(async (req: any, res: any, next: any) => {
   })
 })
 
-const BlogController = { create, deleteBlog, getSingle }
+const update = catchAsync(async (req: any, res: any, next: any) => {
+  const blogData = req.body
+  blogData.authorId = req.user.userId
+  const blog = await BlogServices.updateToDB(blogData)
+  if (blog) {
+    return sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Blog updated successfully",
+      data: blog,
+      meta: null,
+    })
+  }
+  return sendResponse(res, {
+    statusCode: httpStatus.BAD_REQUEST,
+    success: false,
+    message: "Blog cannot update, please try again",
+    data: null,
+    meta: null,
+  })
+})
+
+const BlogController = { create, deleteBlog, getSingle, update }
 
 export default BlogController
